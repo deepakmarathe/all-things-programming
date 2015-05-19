@@ -1,0 +1,23 @@
+
+Locally run a dynamodb service emulator
+---------------------------------------
+cd /Users/dmarathe/work/sdk/dynamodb_local_2015-01-27_1.2
+java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -inMemory -port 8001
+
+
+Working with Tables:
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AppendixSampleDataCodeJava.html
+
+
+Java Object Persistence Model
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/JavaSDKHighLevel.html
+
+JavaORMDynamoDBMapper:
+http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/JavaORMDynamoDBMapper.html
+
+
+Transactions:
+https://github.com/awslabs/dynamodb-transactions
+https://aws.amazon.com/blogs/aws/dynamodb-transaction-library/
+
+

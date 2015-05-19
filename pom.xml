@@ -5,6 +5,7 @@
     <modules>
         <module>archaius-demo</module>
         <module>concurrency-demo</module>
+        <module>dynamodb-demo</module>
     </modules>
 
     <groupId>com.deepakm.app</groupId>
