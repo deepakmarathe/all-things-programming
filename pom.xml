@@ -4,6 +4,7 @@
     <name>All things programming</name>
     <modules>
         <module>archaius-demo</module>
+        <module>concurrency-demo</module>
     </modules>
 
     <groupId>com.deepakm.app</groupId>
