@@ -41,7 +41,7 @@ public class Counter {
     }
 
     public synchronized boolean isComplete() {
-        return !(counter <= LIMIT);
+        return counter > LIMIT;
     }
 
     public synchronized void setCompleted() {
