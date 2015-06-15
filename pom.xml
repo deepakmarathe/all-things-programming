@@ -6,11 +6,18 @@
         <module>archaius-demo</module>
         <module>concurrency-demo</module>
         <module>dynamodb-demo</module>
+        <module>webservice-ssl</module>
     </modules>
 
     <groupId>com.deepakm.app</groupId>
     <artifactId>demo</artifactId>
     <version>1</version>
+
+    <properties>
+        <maven.compiler.version>3.3</maven.compiler.version>
+        <source.version>1.7</source.version>
+        <target.version>1.7</target.version>
+    </properties>
 
     <repositories>
         <repository>
@@ -144,6 +151,17 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${source.version}</source>
+                    <target>${target.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <reporting>
