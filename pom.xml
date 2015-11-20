@@ -7,6 +7,13 @@
         <module>concurrency-demo</module>
         <module>dynamodb-demo</module>
         <module>webservice-ssl</module>
+        <module>dropwizard</module>
+        <module>chordgen</module>
+        <module>chrome-extensions</module>
+        <module>swing-workspace</module>
+        <module>temp</module>
+        <module>design-patterns</module>
+        <module>ds-algo</module>
     </modules>
 
     <groupId>com.deepakm.app</groupId>
@@ -17,6 +24,8 @@
         <maven.compiler.version>3.3</maven.compiler.version>
         <source.version>1.7</source.version>
         <target.version>1.7</target.version>
+        <testng.version>6.9.4</testng.version>
+
     </properties>
 
     <repositories>
@@ -52,6 +61,17 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
     <build>
         <directory>${project.basedir}/target</directory>
         <outputDirectory>${project.build.directory}/classes</outputDirectory>

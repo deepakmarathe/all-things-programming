@@ -70,8 +70,38 @@
             <artifactId>h2</artifactId>
             <version>1.4.181</version>
         </dependency>
+        <dependency>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
+            <version>0.4</version>
+        </dependency>
 
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.jcabi</groupId>
+                <artifactId>jcabi-dynamodb-maven-plugin</artifactId>
+                <version>0.7.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>start</goal>
+                            <goal>create-tables</goal>
+                            <goal>stop</goal>
+                        </goals>
+                        <configuration>
+                            <tables>
+                                <port>8002</port>
+                                <dist>${project.build.directory}/dynamodb-dist</dist>
+                                <table>${basedir}/src/test/resources/dynamodb/properties-config.json</table>
+                            </tables>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
 
+    </build>
 
 </project>
