@@ -1,5 +1,7 @@
 package com.deepakm.puzzles.sudoku.board;
 
+import java.io.PrintStream;
+
 /**
  * Created by dmarathe on 1/21/16.
  */
@@ -91,12 +93,12 @@ public class ArrayBackedBoard implements Board {
     }
 
     @Override
-    public void printBoard() {
+    public void printBoard(PrintStream out) {
         final char space = ' ';
         final char vertical = '|';
         final char horizontal = '-';
 
-        System.out.println();
+        out.println();
         for (int i = 0; i < rows; i++) {
             StringBuffer buffer = new StringBuffer();
             buffer.append("" + vertical + "" + space);
@@ -109,22 +111,22 @@ public class ArrayBackedBoard implements Board {
             String line = buffer.toString();
 
             if( i!= 0) {
-                System.out.println(line);
+                out.println(line);
 
                 if ((i + 1) % 3 == 0) {
                     for (int k = 0; k < line.length() / 2; k++) {
-                        System.out.print(horizontal + "" + space);
+                        out.print(horizontal + "" + space);
                     }
                 }
             } else {
                 for (int k = 0; k < line.length() / 2; k++) {
-                    System.out.print(horizontal + "" + space);
+                    out.print(horizontal + "" + space);
                 }
-                System.out.println();
-                System.out.println(line);
+                out.println();
+                out.println(line);
             }
-            System.out.println();
+            out.println();
         }
-        System.out.println();
+        out.println();
     }
 }

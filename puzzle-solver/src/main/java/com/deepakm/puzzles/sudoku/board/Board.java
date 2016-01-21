@@ -1,5 +1,7 @@
 package com.deepakm.puzzles.sudoku.board;
 
+import java.io.PrintStream;
+
 /**
  * Created by dmarathe on 1/21/16.
  */
@@ -16,5 +18,5 @@ public interface Board {
     public void unset(int row, int column);
     public boolean isSet(int row, int column);
 
-    public void printBoard();
+    public void printBoard(PrintStream out);
 }
