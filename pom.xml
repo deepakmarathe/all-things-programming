@@ -14,6 +14,11 @@
         <module>temp</module>
         <module>design-patterns</module>
         <module>ds-algo</module>
+        <module>vertica-udf</module>
+        <module>puzzle-solver</module>
+        <module>intellij-idea-plugins</module>
+        <module>hibernate-sample</module>
+        <module>hibernate-sample-1</module>
     </modules>
 
     <groupId>com.deepakm.app</groupId>
