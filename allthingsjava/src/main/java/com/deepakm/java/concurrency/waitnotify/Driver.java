@@ -1,4 +1,4 @@
-package com.deepakm.concurrency.waitnotify;
+package com.deepakm.java.concurrency.waitnotify;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

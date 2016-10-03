@@ -1,11 +1,11 @@
-package com.deepakm.concurrency.waitnotify;
+package com.deepakm.java.concurrency.waitnotify;
 
 public class Producer implements Runnable {
 
     private final Counter counter;
     private final Long LIMIT = 100L;
 
-    public Producer(Counter counter) {
+    public Producer(final Counter counter) {
         this.counter = counter;
     }
 

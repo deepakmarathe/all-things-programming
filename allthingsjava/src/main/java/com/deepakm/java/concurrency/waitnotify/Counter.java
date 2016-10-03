@@ -1,4 +1,4 @@
-package com.deepakm.concurrency.waitnotify;
+package com.deepakm.java.concurrency.waitnotify;
 
 public class Counter {
     private volatile Long counter;
