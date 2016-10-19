@@ -3,7 +3,7 @@ package com.deepakm.java.concurrency.locks;
 /**
  * Created by dmarathe on 10/5/16.
  */
-public class Counter {
+public class Counter implements CounterAPI {
     private long counter = 0;
     private long limit = 0L;
     private final Lock producerLock = new Lock();
@@ -16,23 +16,31 @@ public class Counter {
 
     }
 
-    public void increment() throws InterruptedException {
-        producerLock.lock();
-        if (!isAvailable && counter < limit) {
-            long newCount = ++counter;
-            isAvailable = true;
-            System.out.println("Produced " + counter);
+    public void increment() {
+        try {
+            producerLock.lock();
+            if (!isAvailable && counter < limit) {
+                long newCount = ++counter;
+                isAvailable = true;
+                System.out.println("Produced " + counter);
+            }
+            consumerLock.unlock();
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        consumerLock.unlock();
     }
 
-    public void print() throws InterruptedException {
-        consumerLock.lock();
-        if (isAvailable && counter <= limit) {
-            isAvailable = false;
-            System.out.println("Consumed " + counter);
+    public void print() {
+        try {
+            consumerLock.lock();
+            if (isAvailable && counter <= limit) {
+                isAvailable = false;
+                System.out.println("Consumed " + counter);
+            }
+            producerLock.unlock();
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        producerLock.unlock();
     }
 
 

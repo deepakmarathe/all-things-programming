@@ -1,5 +1,7 @@
 package com.deepakm.java.concurrency.locks;
 
+import java.util.Comparator;
+
 /**
  * Created by dmarathe on 10/5/16.
  */
@@ -13,6 +15,7 @@ public class ReentrantLock {
         while(isLocked && lockedBy != Thread.currentThread()){
             wait();
         }
+//        Comparator
         isLocked = true;
         lockedCount++;
         lockedBy = Thread.currentThread();

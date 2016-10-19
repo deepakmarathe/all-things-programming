@@ -4,20 +4,18 @@ package com.deepakm.java.concurrency.locks;
  * Created by dmarathe on 10/5/16.
  */
 public class ItemProducer implements Runnable {
-    private final Counter counter;
+    private final CounterAPI counter;
 
-    public ItemProducer(Counter sharedResource) {
+    public ItemProducer(CounterAPI sharedResource) {
         this.counter = sharedResource;
     }
 
     @Override
     public void run() {
-        try {
-            while (true) {
-                counter.increment();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        while (true) {
+            counter.increment();
         }
+
     }
 }

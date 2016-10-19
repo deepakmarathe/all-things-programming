@@ -6,7 +6,8 @@ package com.deepakm.java.concurrency.locks;
 public class Driver {
     public static void main(String[] args) throws InterruptedException {
 
-        final Counter counter = new Counter(10);
+//        final Counter counter = new Counter(10);
+        final FlipCounter counter = new FlipCounter(10);
 
         Thread producer = new Thread(new ItemProducer(counter));
         producer.start();
