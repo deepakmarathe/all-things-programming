@@ -2,28 +2,42 @@ package com.deepakm.impl;
 
 import com.deepakm.impl.modes.Modes;
 import com.deepakm.impl.modes.Phrygian;
-import com.sun.javafx.scene.control.Keystroke;
+
 
 /**
  * Created by dmarathe on 8/17/15.
  */
 public enum Scale {
-    MAJOR(new short[]{2, 2, 1, 2, 2, 2, 1}),
-    NATURAL_MINOR(new short[]{2, 1, 2, 2, 1, 2, 2}),
-    MELODIC_MINOR(new short[]{2, 1, 2, 2, 2, 2, 1}),
-    HARMONIC_MINOR(new short[]{ 2, 1, 2, 2, 1, 3, 1});
+    MAJOR(new int[]{2, 2, 1, 2, 2, 2, 1}),
+    NATURAL_MINOR(new int[]{2, 1, 2, 2, 1, 2, 2}),
+    MELODIC_MINOR(new int[]{2, 1, 2, 2, 2, 2, 1}),
+    HARMONIC_MINOR(new int[]{ 2, 1, 2, 2, 1, 3, 1}),
 
-    private short[] stepPattern;
+    //Modes of Major
+    IONIAN(new int[]{2, 2, 1, 2, 2, 2, 1}),
+    LYDIAN(new int[]{2, 2, 2, 1, 2, 2, 1}),
+    MIXOLYDIAN(new int[]{2, 2, 1, 2, 2, 1, 2}),
 
-    private Scale(short[] stepPattern) {
+    //Modes of Minor
+    DORIAN(new int[]{2, 1, 2, 2, 2, 1, 2}),
+    PHRYGIAN(new int[]{1, 2, 2, 2, 1, 2, 2}),
+    AEOLIAN(new int[]{2, 1, 2, 2, 1, 2, 2});
+
+    private int[] stepPattern;
+
+    private Scale(int[] stepPattern) {
         this.stepPattern = stepPattern;
+    }
+
+    public int[] getStepPattern(){
+        return stepPattern;
     }
 
     public Key[] getForNote(Key note) {
         Key[] notes = new Key[8];
         notes[0] = note;
         short noteIndex = 1;
-        for (short step : stepPattern) {
+        for (int step : stepPattern) {
             notes[noteIndex] = notes[noteIndex - 1].next(step);
             noteIndex++;
         }
