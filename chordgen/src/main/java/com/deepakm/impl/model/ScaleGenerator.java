@@ -2,12 +2,8 @@ package com.deepakm.impl.model;
 
 import com.deepakm.impl.Key;
 import com.deepakm.impl.Scale;
-import sun.jvm.hotspot.memory.SystemDictionary;
-import sun.jvm.hotspot.runtime.Bytes;
 
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.nio.*;
 
 /**
  * Created by dmarathe on 11/10/16.
@@ -28,7 +24,7 @@ public class ScaleGenerator implements Serializable{
     }
 
     public static void main(String[] args) throws Exception{
-        for (Key key : ScaleGenerator.getScale(Key.B, Scale.PHRYGIAN)) {
+        for (Key key : ScaleGenerator.getScale(Key.A, Scale.PHRYGIAN)) {
             System.out.println(key);
         }
     }

@@ -1,12 +1,10 @@
-package com.deepakm.guitar;
+package com.deepakm.impl.instrument.guitar;
 
 import com.deepakm.impl.Key;
 import com.deepakm.impl.Scale;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by dmarathe on 11/9/16.
@@ -42,7 +40,7 @@ public class GuitarPlotter {
 
     public static void main(String[] args) {
 
-        new FretBoard().printPositions(Key.E);
-        new GuitarPlotter().toString();
+        new FretBoard().getFretPositions(Key.E);
+//        new GuitarPlotter().toString();
     }
 }

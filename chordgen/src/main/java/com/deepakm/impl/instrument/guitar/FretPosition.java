@@ -1,4 +1,4 @@
-package com.deepakm.guitar;
+package com.deepakm.impl.instrument.guitar;
 
 import com.deepakm.impl.Key;
 
@@ -9,6 +9,11 @@ import com.deepakm.impl.Key;
 public class FretPosition {
     private int stringNumber;
     private int fretPosition;
+
+    public Key getNote() {
+        return note;
+    }
+
     private Key note;
 
     public FretPosition(int stringNumber, int fretPosition, Key note) {
@@ -35,6 +40,7 @@ public class FretPosition {
 
     @Override
     public String toString() {
-        return note.toString() + ":(" + stringNumber + "," + fretPosition + ")";
+//        return note.toString() + ":(" + stringNumber + "," + fretPosition + ")";
+        return note.toString();
     }
 }

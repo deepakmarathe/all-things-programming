@@ -33,6 +33,7 @@ public enum Scale {
         return stepPattern;
     }
 
+//    public Key[] getChordForNote(BitSet)
     public Key[] getForNote(Key note) {
         Key[] notes = new Key[8];
         notes[0] = note;
