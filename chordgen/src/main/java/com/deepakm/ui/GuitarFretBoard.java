@@ -12,6 +12,7 @@ import com.deepakm.impl.Scale;
 import com.deepakm.impl.instrument.guitar.DefaultGuitarTableModel;
 import com.deepakm.impl.instrument.guitar.FretBoard;
 import com.deepakm.impl.instrument.guitar.FretPosition;
+import com.deepakm.impl.modes.Mode;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.Soundbank;
@@ -33,8 +34,14 @@ public class GuitarFretBoard extends javax.swing.JFrame {
      */
     public GuitarFretBoard() {
         initComponents();
+        initialise();
     }
 
+    private void initialise(){
+        jComboBox1.setModel(new DefaultComboBoxModel(Key.values()));
+        jComboBox2.setModel(new DefaultComboBoxModel(Scale.values()));
+        jTable1.setModel(new DefaultTableModel(DefaultGuitarTableModel.getTableModel(), DefaultGuitarTableModel.getHeader()));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,16 +57,9 @@ public class GuitarFretBoard extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
+        jComboBox2 = new javax.swing.JComboBox();
 
         jLabel3.setText("Clear");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                jLabel3MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-//                jLabel3MouseEntered(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,7 +87,11 @@ public class GuitarFretBoard extends javax.swing.JFrame {
 
         jLabel2.setText("Full Board");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "A_SHARP", "B", "C", "C_SHARP", "D", "D__SHARP", "E", "F", "F_SHARP", "G", "G_SHARP", " " }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,11 +103,12 @@ public class GuitarFretBoard extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -113,7 +118,9 @@ public class GuitarFretBoard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,23 +133,30 @@ public class GuitarFretBoard extends javax.swing.JFrame {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
+
         jTable1.setModel(new DefaultTableModel(DefaultGuitarTableModel.getTableModel(), DefaultGuitarTableModel.getHeader()));
 //        ((DefaultTableModel) jTable1.getModel()).fireTableDataChanged();
         System.out.println("Column count : " + jTable1.getModel().getColumnCount());
         
-        String scale = jComboBox1.getSelectedItem().toString();
-        Key key = Key.valueOf(scale);
-        
+        String keyString = jComboBox1.getSelectedItem().toString();
+        Key key = Key.valueOf(keyString);
+        String mode = jComboBox2.getSelectedItem().toString();
+        Scale scale = Scale.valueOf(mode);
         for (int i = 0; i < 13; i++) {
             jTable1.getColumn(String.valueOf(i)).setCellRenderer(new RadioButtonRenderer(key));
         }
 
-        for (FretPosition fretPosition :  new FretBoard().getFretPositions(key, Scale.MAJOR)) {
+        for (FretPosition fretPosition :  new FretBoard().getFretPositions(key, scale)) {
             jTable1.getModel().setValueAt(fretPosition, fretPosition.getStringNumber() - 1,
                     fretPosition.getFretPosition());
         }
 //        jTable1.repaint();
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        System.out.println(jComboBox2.getSelectedItem());
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,6 +185,7 @@ public class GuitarFretBoard extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -181,6 +196,7 @@ public class GuitarFretBoard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
