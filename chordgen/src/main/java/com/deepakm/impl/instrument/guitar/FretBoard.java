@@ -31,6 +31,13 @@ public class FretBoard {
         stringNumberToNote.put(5, Key.B);
         stringNumberToNote.put(6, Key.E);
 
+//        stringNumberToNote.put(6, Key.E);
+//        stringNumberToNote.put(5, Key.A);
+//        stringNumberToNote.put(4, Key.D);
+//        stringNumberToNote.put(3, Key.G);
+//        stringNumberToNote.put(2, Key.B);
+//        stringNumberToNote.put(1, Key.E);
+
 
         for (Key key : Key.values()) {
             if (!fretBoard.containsKey(key)) {

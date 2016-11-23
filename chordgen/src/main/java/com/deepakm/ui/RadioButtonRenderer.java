@@ -2,6 +2,9 @@ package com.deepakm.ui;
 
 import com.deepakm.impl.Key;
 import com.deepakm.impl.instrument.guitar.FretPosition;
+import com.sun.xml.internal.bind.v2.runtime.Coordinator;
+import javafx.scene.control.Cell;
+
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
@@ -28,10 +31,18 @@ public class RadioButtonRenderer implements TableCellRenderer {
             return new JLabel(String.valueOf(""));
         } else {
             JRadioButton button = new JRadioButton();
-            if( val instanceof FretPosition){
-                if( ((FretPosition)val).getNote() == key) {
-                button.setSelected(Boolean.TRUE);
+
+            button.setForeground(Color.RED);
+            button.updateUI();
+            if (val instanceof FretPosition) {
+                if (((FretPosition) val).getNote() == key) {
+                    button.setSelected(Boolean.TRUE);
                 }
+//                button.getGraphics().setColor(Color.GREEN);
+//                table.setCellSelectionEnabled(true);
+//                table.getCellEditor().getTableCellEditorComponent(table, value, isSelected, row,
+//                        column).setBackground(Color.GREEN);
+
             }
             button.setText(String.valueOf(val));
             return button;
