@@ -7,18 +7,18 @@
         <module>concurrency-demo</module>
         <module>dynamodb-demo</module>
         <module>webservice-ssl</module>
-        <module>dropwizard</module>
+        <!-- <module>dropwizard</module> -->
         <module>chordgen</module>
         <module>chrome-extensions</module>
-        <module>swing-workspace</module>
-        <module>temp</module>
+        <!-- <module>swing-workspace</module> -->
+        <!-- <module>temp</module> -->
         <module>design-patterns</module>
         <module>ds-algo</module>
         <module>vertica-udf</module>
-        <module>puzzle-solver</module>
-        <module>intellij-idea-plugins</module>
+        <!-- <module>puzzle-solver</module> -->
+        <!-- <module>intellij-idea-plugins</module> -->
         <module>hibernate-sample</module>
-        <module>hibernate-sample-1</module>
+        <!-- <module>hibernate-sample-1</module> -->
     </modules>
 
     <groupId>com.deepakm.app</groupId>

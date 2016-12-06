@@ -2,12 +2,13 @@ package com.deepakm.ui;
 
 import com.deepakm.impl.Key;
 import com.deepakm.impl.instrument.guitar.FretPosition;
-import com.sun.xml.internal.bind.v2.runtime.Coordinator;
-import javafx.scene.control.Cell;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 
 /**
  * Created by dmarathe on 11/10/16.

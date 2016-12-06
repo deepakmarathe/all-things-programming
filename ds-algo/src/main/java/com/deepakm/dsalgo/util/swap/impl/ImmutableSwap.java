@@ -1,8 +1,5 @@
 package com.deepakm.dsalgo.util.swap.impl;
 
-import com.intuit.idea.dsalgo.util.swap.Pair;
-import com.intuit.idea.dsalgo.util.swap.Swap;
-
 /**
  * Created by dmarathe on 11/17/15.
  */
@@ -16,5 +13,39 @@ public class ImmutableSwap<A> implements Swap<Pair<? extends A>> {
         pair.setSecond(input.getFirst());
 
         return pair;
+    }
+}
+
+interface Swap<Pair> {
+    public Pair swap(final Pair input);
+}
+
+class Pair<A> {
+    private A first;
+    private A second;
+
+    public Pair() {
+
+    }
+
+    public Pair(A first, A second) {
+        setFirst(first);
+        setSecond(second);
+    }
+
+    public A getFirst() {
+        return first;
+    }
+
+    public A getSecond() {
+        return second;
+    }
+
+    public void setFirst(A first) {
+        this.first = first;
+    }
+
+    public void setSecond(A second) {
+        this.second = second;
     }
 }
