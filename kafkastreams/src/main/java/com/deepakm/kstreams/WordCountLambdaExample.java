@@ -1,5 +1,6 @@
 package com.deepakm.kstreams;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
@@ -29,17 +30,26 @@ import java.util.regex.Pattern;
  */
 public class WordCountLambdaExample {
 
-    public static final String sourceTopic = "TextLinesTopic";
-    public static final String intermediateTopic = "RekeyedIntermediateTopic";
-    public static final String sinkTopic = "WordsWithCountsTopic";
-
     public static void main(String[] args) {
 
-        String applicationId = "wordcount-lambda-example2";
+        String sourceTopic = System.getenv().get(ConfigKeys.SOURCE_TOPIC);
+        String intermediateTopic = System.getenv().get(ConfigKeys.INTERMEDIATE_TOPIC);
+        String sinkTopic = System.getenv().get(ConfigKeys.SINK_TOPIC);
+        String bootstrapServers = System.getenv().get(ConfigKeys.BOOTSTRAP_SERVERS_VALUE);
+        String zookeeperConnectValue = System.getenv().get(ConfigKeys.ZOOKEEPER_CONNECT_CONFIG_VALUE);
+        String applicationId = System.getenv().get(ConfigKeys.APPLICATION_ID);
+
+        System.out.println("apploicationId : " + applicationId);
+        System.out.println("zookeeper config value : " + zookeeperConnectValue);
+        System.out.println("bootstrap servers : " + bootstrapServers);
+        System.out.println("sink topic : " + sinkTopic);
+        System.out.println("intermediate topic : " + intermediateTopic);
+        System.out.println("source topic : " + sourceTopic);
+
         Properties streamsConfig = new Properties();
-        streamsConfig.put(KafkaConfigKeys.KAFKA_APPLICATION_ID, applicationId);
-        streamsConfig.put(KafkaConfigKeys.BOOTSTRAP_SERVERS, "172.16.223.152:32777");
-        streamsConfig.put(StreamsConfig.ZOOKEEPER_CONNECT_CONFIG, "172.16.223.152:2181");
+        streamsConfig.put(ConfigKeys.KAFKA_APPLICATION_ID, applicationId);
+        streamsConfig.put(ConfigKeys.BOOTSTRAP_SERVERS_KEY, bootstrapServers);
+        streamsConfig.put(StreamsConfig.ZOOKEEPER_CONNECT_CONFIG, zookeeperConnectValue);
         streamsConfig.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         streamsConfig.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 

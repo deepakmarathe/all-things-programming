@@ -26,4 +26,14 @@ dependencies {
     compile group: 'org.apache.kafka', name: 'kafka-streams', version: '0.10.0.1'
 }
 
+def mainClassName = "com.deepakm.kstreams.WordCountLambdaExample"
+
+task runConsumer(type: JavaExec) {
+    Properties properties = new Properties();
+    properties.load(new FileInputStream(file('env/local.properties')))
+    main = mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    environment properties
+}
+
 
