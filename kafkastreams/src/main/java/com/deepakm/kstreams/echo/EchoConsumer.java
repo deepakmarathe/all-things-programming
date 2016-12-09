@@ -1,6 +1,9 @@
 package com.deepakm.kstreams.echo;
 
 import com.deepakm.kstreams.ConfigKeys;
+import com.deepakm.kstreams.StreamingClient;
+import com.deepakm.kstreams.sink.HttpSink;
+import com.deepakm.kstreams.sink.Sink;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -19,6 +22,8 @@ import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KStreamBuilder;
 import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 
 import java.io.IOException;
@@ -45,6 +50,8 @@ import java.util.regex.Pattern;
  * $KAFKA_HOME/bin/kafka-console-consumer.sh --topic=WordsWithCountsTopic --zookeeper=$ZK --from-beginning --property print.key=true --property value.deserializer=org.apache.kafka.common.serialization.StringDeserializer
  */
 public class EchoConsumer {
+    private static final Logger logger = Logger.getLogger(EchoConsumer.class);
+
     public static void main(String[] args) {
 
         String sourceTopic = System.getenv().get(ConfigKeys.SOURCE_TOPIC);
@@ -54,12 +61,12 @@ public class EchoConsumer {
         String zookeeperConnectValue = System.getenv().get(ConfigKeys.ZOOKEEPER_CONNECT_CONFIG_VALUE);
         String applicationId = System.getenv().get(ConfigKeys.APPLICATION_ID);
 
-        System.out.println("apploicationId : " + applicationId);
-        System.out.println("zookeeper config value : " + zookeeperConnectValue);
-        System.out.println("bootstrap servers : " + bootstrapServers);
-        System.out.println("sink topic : " + sinkTopic);
-        System.out.println("intermediate topic : " + intermediateTopic);
-        System.out.println("source topic : " + sourceTopic);
+        logger.log(Level.DEBUG, "apploicationId : " + applicationId);
+        logger.log(Level.DEBUG, "zookeeper config value : " + zookeeperConnectValue);
+        logger.log(Level.DEBUG, "bootstrap servers : " + bootstrapServers);
+        logger.log(Level.DEBUG, "sink topic : " + sinkTopic);
+        logger.log(Level.DEBUG, "intermediate topic : " + intermediateTopic);
+        logger.log(Level.DEBUG, "source topic : " + sourceTopic);
 
         Properties streamsConfig = new Properties();
         streamsConfig.put(ConfigKeys.KAFKA_APPLICATION_ID, applicationId);
@@ -68,72 +75,9 @@ public class EchoConsumer {
         streamsConfig.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         streamsConfig.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
-        final Serde<String> stringSerde = Serdes.String();
-        final Serde<Long> longSerde = Serdes.Long();
-
-        KStreamBuilder builder = new KStreamBuilder();
-
-        KStream<String, String> textLines = builder.stream(stringSerde, stringSerde, sourceTopic);
-
-        Pattern pattern = Pattern.compile("\\W+", Pattern.UNICODE_CHARACTER_CLASS);
-
-        textLines
-                .flatMapValues(value -> Arrays.asList(pattern.split(value.toLowerCase())))
-                .map((key, word) -> new KeyValue<>(word, word.toUpperCase()))
-                .process(() -> new Processor<String, String>() {
-
-                    String url = "http://localhost:8080/bookinglog";
-
-                    HttpClient client = HttpClientBuilder.create().build();
-                    final HttpPost post = new HttpPost(url);
-
-                    @Override
-                    public void init(ProcessorContext context) {
-
-                    }
-
-                    @Override
-                    public void process(String key, String value) {
-                        System.out.println(" key : " + key + ", value : " + value);
-                        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-                        urlParameters.add(new BasicNameValuePair("key", key));
-                        urlParameters.add(new BasicNameValuePair("value", value));
-
-                        try {
-                            post.setEntity(new UrlEncodedFormEntity(urlParameters));
-                            HttpResponse response = client.execute(post);
-                            System.out.println("Response Code : "
-                                    + response.getStatusLine().getStatusCode());
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        } catch (ClientProtocolException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-                    @Override
-                    public void punctuate(long timestamp) {
-
-                    }
-
-                    @Override
-                    public void close() {
-
-                    }
-                });
-//                .through(intermediateTopic)
-//                .countByKey("Counts")
-//                .toStream();
-
-//        strings.to(stringSerde, stringSerde, sinkTopic);
-
-        KafkaStreams kafkaStreams = new KafkaStreams(builder, streamsConfig);
-        kafkaStreams.start();
-
-        Runtime.getRuntime().addShutdownHook(new Thread(kafkaStreams::close));
+        Sink sink = new HttpSink("http://localhost:8080/bookinglog");
+        StreamingClient client = new StreamingClient(streamsConfig, sink, sourceTopic);
+        client.start();
+        client.close();
     }
 }

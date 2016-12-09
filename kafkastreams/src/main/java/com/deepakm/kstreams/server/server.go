@@ -14,7 +14,7 @@ type test_struct struct {
 func test(rw http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		fmt.Println("---------------error---------")
+		fmt.Println("---------------error----------\n", err)
 	}
 	log.Println(string(body))
 }
