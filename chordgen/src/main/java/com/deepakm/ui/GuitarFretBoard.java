@@ -12,6 +12,7 @@ import com.deepakm.impl.Scale;
 import com.deepakm.impl.instrument.guitar.DefaultGuitarTableModel;
 import com.deepakm.impl.instrument.guitar.FretBoard;
 import com.deepakm.impl.instrument.guitar.FretPosition;
+import com.deepakm.impl.model.NoteFactory;
 import com.deepakm.impl.modes.Mode;
 
 import javax.sound.midi.MidiChannel;

@@ -2,6 +2,7 @@ package com.deepakm.kstreams.echo;
 
 import com.deepakm.kstreams.ConfigKeys;
 import com.deepakm.kstreams.StreamingClient;
+import com.deepakm.kstreams.sink.ConsoleSink;
 import com.deepakm.kstreams.sink.HttpSink;
 import com.deepakm.kstreams.sink.Sink;
 import org.apache.http.HttpResponse;
@@ -76,6 +77,7 @@ public class EchoConsumer {
         streamsConfig.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 
         Sink sink = new HttpSink("http://localhost:8080/bookinglog");
+        sink = new ConsoleSink();
         StreamingClient client = new StreamingClient(streamsConfig, sink, sourceTopic);
         client.start();
         client.close();
