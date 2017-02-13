@@ -37,8 +37,13 @@ public enum Key {
     B;
 
     public Key next(int skip) {
+        while (skip < 0) {
+            skip = skip + 12;
+        }
+
         int nextNote = (ordinal() + skip) % 12;
         return values()[nextNote];
+
     }
 //    private short ordinal;
 //

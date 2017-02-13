@@ -1,0 +1,39 @@
+group 'com.deepakm.kafka'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = org.gradle.api.JavaVersion.VERSION_1_8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven {
+        url "http://artifactory-gojek.golabs.io/artifactory/gojek-release-local"
+    }
+    maven {
+        url "https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients"
+    }
+    maven {
+        url "https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams"
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.apache.kafka', name: 'kafka-clients', version: '0.10.0.1'
+    compile group: 'org.apache.kafka', name: 'kafka-streams', version: '0.10.0.1'
+}
+
+def mainClassName = "com.deepakm.kstreams.WordCountLambdaExample"
+
+task runConsumer(type: JavaExec) {
+    Properties properties = new Properties();
+    properties.load(new FileInputStream(file('env/local.properties')))
+    main = mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    environment properties
+}
+
+
